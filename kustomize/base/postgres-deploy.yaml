@@ -20,16 +20,14 @@ spec:
       containers:
       - name: postgres
         image: docker.io/library/postgres:15
+        securityContext:
+          runAsUser: 0
         ports:
         - containerPort: 5432
         env:
-        - name: POSTGRESQL_USER
+        - name: POSTGRES_USER
           value: "bank_admin"
-        - name: POSTGRESQL_PASSWORD
-          value: "InitialDummyPasswordToOverrideWithVault"
-        - name: POSTGRESQL_DATABASE
+        - name: POSTGRES_PASSWORD
+          value: "mypassword"
+        - name: POSTGRES_DB
           value: "expenditure_db"
-        resources:
-          limits:
-            cpu: "1"
-            memory: "2Gi"
