@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-tier
+  labels:
+    app: expenditure
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: expenditure
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: expenditure
+        tier: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: expenditure-frontend:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"

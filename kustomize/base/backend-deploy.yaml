@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-tier
+  labels:
+    app: expenditure
+    tier: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: expenditure
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: expenditure
+        tier: backend
+    spec:
+      containers:
+      - name: backend
+        image: expenditure-backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: "postgres-service"
+        - name: MQ_HOST
+          value: "rabbitmq-service"
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "250m"
+            memory: "512Mi"

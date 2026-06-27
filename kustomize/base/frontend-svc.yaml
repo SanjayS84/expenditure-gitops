@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: expenditure
+    tier: frontend
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: frontend-route
+spec:
+  to:
+    kind: Service
+    name: frontend-service
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-tier
+  labels:
+    app: expenditure
+    tier: mq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expenditure
+      tier: mq
+  template:
+    metadata:
+      labels:
+        app: expenditure
+        tier: mq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: registry.redhat.io/rhel9/rabbitmq-311:latest
+        ports:
+        - containerPort: 5672
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
